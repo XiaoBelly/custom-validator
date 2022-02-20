@@ -1,7 +1,7 @@
 const { ValidatorForm } = require("../index");
 
 function validatorAddress(value, callback) {
-  callback(new Error("请输入地址"));
+  callback(new Error("Please enter address"));
 }
 
 var formData = {
@@ -12,10 +12,10 @@ var formData = {
 
 var formRule = {
   name: [
-    { required: true, message: "请输入名称" },
-    { min: 1, max: 5, message: "名字长度不能大于5位" },
+    { required: true, message: "Please enter name!" },
+    { min: 1, max: 5, message: "Name length cannot be between 1 and 5" },
   ],
-  age: [{ type: "number", message: "年龄必须数字类型" }],
+  age: [{ type: "number", message: "Age must be numeric!" }],
   address: [{ validator: validatorAddress }],
 };
 

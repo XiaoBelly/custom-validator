@@ -11,13 +11,17 @@ const formData = {
 };
 
 const formRule = {
-  name: [{ required: true, message: "请输入父级节点名称" }],
+  name: [{ required: true, message: "Please enter name!" }],
   child: [{ validator: validatorChild }],
 };
 
 const formChildRule = {
-  name: [{ required: true, message: "请输入子级节点名称" }],
+  name: [{ required: true, message: "Please enter child name!" }],
   grand: [{ validator: validatorGrand }]
+};
+
+const formGrandRule = {
+  name: [{ required: true, message: "Please enter grandson name!" }]
 };
 
 function validatorChild(value, callback) {
@@ -31,9 +35,6 @@ function validatorChild(value, callback) {
   });
 }
 
-const formGrandRule = {
-  name: [{ required: true, message: "请输入子孙级节点名称" }]
-};
 
 function validatorGrand(value, callback) {
   const innerForm = new ValidatorForm(formData.child.grand, formGrandRule, false);

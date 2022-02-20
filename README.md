@@ -136,9 +136,20 @@ Validator                               | Description
 --------------------------------------- | --------------------------------------
 **ValidatorForm(data, rule, status)** | Check if the form data is correct.<br /><br />`data` is an object. check the form object<br /><br />`rule` is an object. check form object validation rules<br /><br />`status` comparison all the data and return the result, default `false`.
 
-### ValidatorForm API
+### ValidatorForm Methods
 Method                               | Description
 --------------------------------------- | --------------------------------------
 **validate(callback)** | Check if the form data is correct.<br /><br />`callback` is an function that defaults return to (validator, fields)<br />Callback: <br/>`validator`: validation results, default `true`.<br/>`fields`: validation exception field array, default `[]`.
+
+
+### ValidatorForm Rule Attributes
+Method                               | Description
+--------------------------------------- | --------------------------------------
+**message** | Check form data error message. default `""`
+**required** | Check if the form data is empty. default `false`
+**type** | Check the form data type. default `string`<br />data type is one of `['number','string', 'array', 'date']`.
+**max** | Check the form data max.
+**min** | Check the form data min.
+**validator(value, callback)** |  Check the form data custom validator function. <br />`value`: Check form data.<br />`callback`: Callback function must be executed.<br />Example: `callback()` or `callback(new Error("Error message"))`.
 
 [npm]: https://nodejs.org/en/
