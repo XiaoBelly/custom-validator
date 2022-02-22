@@ -6,6 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {},
+  "Keywords": [
+    "validator",
+    "validate",
+    "validation",
+    "validator-form",
+    "form"
+  ],
+  "author": "zhangxueyuan<xueyuan1018@126.com>",
+  "bugs": {
+    "url": "https://github.com/XiaoBelly/custom-validator/issues"
+  }
 }
