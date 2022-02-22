@@ -3,7 +3,7 @@
 The library can also be installed through [npm][npm]
 
 ```bash
-$ npm install --save-dev custom-basic-validator 
+$ npm install --save-dev custom-basic-validator
 ```
 
 #### No ES6
@@ -55,9 +55,9 @@ innerForm.validate(function (validate, fields) {
   console.info("validate ==>", validate, fields);
   // false
   // [
-  //   { field: 'name', message: '名字长度不能大于5位' },
-  //   { field: 'age', message: '年龄必须数字类型' },
-  //   { field: 'address', message: '请输入地址' }
+  //   { field: 'name', message: 'Name length cannot be between 1 and 5' },
+  //   { field: 'age', message: 'Age must be numeric' },
+  //   { field: 'address', message: 'Please enter address!' }
   // ]
 });
 ```
@@ -123,33 +123,87 @@ innerForm.validate(function (validate, fields) {
   console.info("validate ==>", validate, fields);
   // false
   // [
-  //   { field: 'name', message: '请输入父级节点名称' },
-  //   { field: 'child.name', message: '请输入子级节点名称' },
-  //   { field: 'child.grand.name', message: '请输入子孙级节点名称' }
+  //   { field: 'name', message: 'Please enter name!' },
+  //   { field: 'child.name', message: 'Please enter child name!' },
+  //   { field: 'child.grand.name', message: 'Please enter grandson name!' }
+  // ]
+});
+```
+
+### Advanced usage - array of nested objects
+
+```javascript
+const { ValidatorForm } = require("../index");
+
+const formData = {
+  name: "",
+  child: [
+    {
+      childName: "",
+    },
+  ],
+};
+
+const formRule = {
+  name: [{ required: true, message: "Please enter name!" }],
+  child: [{ validator: validatorChild }],
+};
+
+const formChildRule = {
+  childName: [{ required: true, message: "Please enter child name!" }],
+};
+
+function validatorChild(value, callback) {
+  let result = [];
+  for (const item of value) {
+    const innerForm = new ValidatorForm(item, formChildRule, false);
+    innerForm.validate(function (validate, fields) {
+      if (!validate) {
+        result = result.concat(fields);
+      }
+    });
+  }
+
+  if (result.length) {
+    callback(result);
+  } else {
+    callback();
+  }
+}
+
+const innerForm = new ValidatorForm(formData, formRule, false);
+
+innerForm.validate(function (validate, fields) {
+  console.info("validate ==>", validate, fields);
+  // false
+  // [
+  //   { field: 'name', message: 'Please enter name!' },
+  //   { field: 'child.grand.name', message: 'Please enter child name!' }
   // ]
 });
 ```
 
 ## Validator
 
-Validator                               | Description
---------------------------------------- | --------------------------------------
-**ValidatorForm(data, rule, status)** | Check if the form data is correct.<br /><br />`data` is an object. check the form object<br /><br />`rule` is an object. check form object validation rules<br /><br />`status` comparison all the data and return the result, default `false`.
+| Validator                             | Description                                                                                                                                                                                                                                     |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ValidatorForm(data, rule, status)** | Check if the form data is correct.<br /><br />`data` is an object. check the form object<br /><br />`rule` is an object. check form object validation rules<br /><br />`status` comparison all the data and return the result, default `false`. |
 
 ### ValidatorForm Methods
-Method                               | Description
---------------------------------------- | --------------------------------------
-**validate(callback)** | Check if the form data is correct.<br /><br />`callback` is an function that defaults return to (validator, fields)<br />Callback: <br/>`validator`: validation results, default `true`.<br/>`fields`: validation exception field array, default `[]`.
 
+| Method                 | Description                                                                                                                                                                                                                                            |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **validate(callback)** | Check if the form data is correct.<br /><br />`callback` is an function that defaults return to (validator, fields)<br />Callback: <br/>`validator`: validation results, default `true`.<br/>`fields`: validation exception field array, default `[]`. |
 
 ### ValidatorForm Rule Attributes
-Method                               | Description
---------------------------------------- | --------------------------------------
-**message** | Check form data error message. default `""`
-**required** | Check if the form data is empty. default `false`
-**type** | Check the form data type. default `string`<br />data type is one of `['number','string', 'array', 'date']`.
-**max** | Check the form data max.
-**min** | Check the form data min.
-**validator(value, callback)** |  Check the form data custom validator function. <br />`value`: Check form data.<br />`callback`: Callback function must be executed.<br />Example: `callback()` or `callback(new Error("Error message"))`.
+
+| Method                         | Description                                                                                                                                                                                               |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **message**                    | Check form data error message. default `""`                                                                                                                                                               |
+| **required**                   | Check if the form data is empty. default `false`                                                                                                                                                          |
+| **type**                       | Check the form data type. default `string`<br />data type is one of `['number','string', 'array', 'date']`.                                                                                               |
+| **max**                        | Check the form data max.                                                                                                                                                                                  |
+| **min**                        | Check the form data min.                                                                                                                                                                                  |
+| **validator(value, callback)** | Check the form data custom validator function. <br />`value`: Check form data.<br />`callback`: Callback function must be executed.<br />Example: `callback()` or `callback(new Error("Error message"))`. |
 
 [npm]: https://nodejs.org/en/
