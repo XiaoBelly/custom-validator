@@ -1,4 +1,4 @@
-const { ValidatorForm } = require("../index");
+const { ValidatorForm } = require("../src/index");
 
 const formData = {
   name: "",

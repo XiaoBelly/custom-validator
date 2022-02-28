@@ -1,6 +1,8 @@
 .gitignore
 .DS_Store
 .editorconfig
-test
+.babelrc
 node_modules
 package-lock.json
+test
+src

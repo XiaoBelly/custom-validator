@@ -1,4 +1,4 @@
-const { ValidatorForm } = require("../index");
+const { ValidatorForm } = require("../src/index");
 
 function validatorAddress(value, callback) {
   callback(new Error("Please enter address"));

@@ -1,14 +1,10 @@
 {
   "name": "custom-basic-validator",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "license": "ISC",
-  "devDependencies": {},
-  "Keywords": [
+  "keywords": [
     "validator",
     "validate",
     "validation",
@@ -18,5 +14,15 @@
   "author": "zhangxueyuan<xueyuan1018@126.com>",
   "bugs": {
     "url": "https://github.com/XiaoBelly/custom-validator/issues"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d ./"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11"
+  },
+  "devDependencies": {}
 }
