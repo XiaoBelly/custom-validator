@@ -2,4 +2,4 @@
 .editorconfig
 node_modules
 package-lock.json
-lib
+./lib
