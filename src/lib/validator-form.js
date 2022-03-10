@@ -64,7 +64,7 @@ class ValidatorForm {
     for (let field in data) {
       const rules = this.rules[field];
       traverseRule(field, data[field], rules);
-      if ((!this.validateResult.status, this.validateSingle)) {
+      if ((!this.validateResult.status && this.validateSingle)) {
         break;
       }
     }
