@@ -218,7 +218,7 @@ class CustomValidate {
     return getDataType(value) === "[object String]";
   }
   static TypeNumberValidator(value) {
-    return getDataType(value) === "[object Number]";
+    return getDataType(value) === "[object Number]" || /^[-]?\d|(\.\d+)+$/.test(value);
   }
   static TypeArrayValidator(value) {
     return getDataType(value) === "[object Array]";
