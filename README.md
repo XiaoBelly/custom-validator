@@ -202,8 +202,10 @@ innerForm.validate(function (validate, fields) {
 | **message**                    | Check form data error message. default `""`                                                                                                                                                               |
 | **required**                   | Check if the form data is empty. default `false`                                                                                                                                                          |
 | **type**                       | Check the form data type. default `string`<br />data type is one of `['number','string', 'array', 'date']`.                                                                                               |
-| **max**                        | Check the form data max.                                                                                                                                                                                  |
-| **min**                        | Check the form data min.                                                                                                                                                                                  |
+| **max**                        | Check the form data max length.                                                                                                                                                                                  |
+| **min**                        | Check the form data min length.                                                                                                                                                                                  |
+| **minimum**                        | Check the form data minimum.                                                                                                                                                                                  |
+| **maximum**                        | Check the form data maximum.                                                                                                                                                                                  |
 | **validator(value, callback)** | Check the form data custom validator function. <br />`value`: Check form data.<br />`callback`: Callback function must be executed.<br />Example: `callback()` or `callback(new Error("Error message"))`. |
 
 [npm]: https://nodejs.org/en/

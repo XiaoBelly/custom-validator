@@ -136,21 +136,16 @@ class CustomValidate {
       if (this.rule.validator instanceof Function) {
         this.rule.validator(this.value, this.validator.bind(this));
       } else {
-        if (nonEmptyPrimaryType) {
-          if (nonEmptySpace) {
-            const validateTypes = ["type", "min", "max"];
-
-            for (const type of validateTypes) {
-              if (type in this.rule) {
-                const validatorValue = this.rule[type];
-                this.result.status = this[`${type}Validator`](validatorValue);
-                if (!this.result.status) {
-                  break;
-                }
+        if (nonEmptyPrimaryType && nonEmptySpace) {
+          const validateTypes = ["type", "min", "max", "minimum", "maximum"];
+          for (const type of validateTypes) {
+            if (type in this.rule) {
+              const validatorValue = this.rule[type];
+              this.result.status = this[`${type}Validator`](validatorValue);
+              if (!this.result.status) {
+                break;
               }
             }
-          } else {
-            this.result.status = false;
           }
         } else {
           this.result.status = this.rule.required ? false : true;
@@ -189,10 +184,28 @@ class CustomValidate {
     return status;
   }
   minValidator(rule) {
-    return this.required() && String(this.value).length >= rule;
+    if (this.required()) {
+      return String(this.value).length >= rule;
+    }
+    return true;
   }
   maxValidator(rule) {
-    return this.required() && String(this.value).length <= rule;
+    if (this.required()) {
+      return String(this.value).length <= rule;
+    }
+    return true;
+  }
+  minimumValidator(rule) {
+    if (this.required()) {
+      return Number(this.value) >= rule;
+    }
+    return true;
+  }
+  maximumValidator(rule) {
+    if (this.required()) {
+      return Number(this.value) <= rule;
+    }
+    return true;
   }
   // 自定义校验规则 validator - 优先级高于 type, min, max
   validator(error) {
